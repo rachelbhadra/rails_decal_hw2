@@ -1,0 +1,40 @@
+<%= button_to "Create a City", cities_new_path, method: :get %>
+
+<br>
+
+<% if not @c.nil? and $cities.key?(@c.to_sym) %>
+	<h1> <%= @c %> </h1>
+	<h3>  Population: <%= $cities[@c.to_sym].population %> </h3>
+	<h3>  Landmark: <%= $cities[@c.to_sym].landmark %> </h3>
+	<% if not @w.nil? %>
+	<p>
+		It's <%= @temperature %>°F
+		and it looks like <%= @w[:description] %>
+	</p>
+	<% end %>
+
+	<%= button_to "Update", cities_update_path, method: :get %>
+
+<% else %>
+	<% @cities = $cities.keys %>
+
+	<% if @cities.empty? %>
+		<h3> There are no cities right now! </h3>
+	<% end %>
+
+	<% @cities.each do |city| %>
+	<% @w = WeatherService.get(city.to_sym) %>
+	<% if not @w.nil? %>
+		<h1> <%= city %> </h1>
+		<h3>  Population: <%= $cities[city].population %> </h3>
+		<h3>  Landmark: <%= $cities[city].landmark %> </h3>
+		<% @temperature = (9 / 5) * (@w[:temperature] - 273) + 32 %>
+		<p>
+			It's <%= @temperature %>°F
+			and it looks like <%= @w[:description] %>
+		</p>
+		<%= button_to "Update", cities_update_path, method: :get %>
+
+	<% end %>
+<% end %>
+<% end %>

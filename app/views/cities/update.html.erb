@@ -1,0 +1,16 @@
+<h2>Update a City</h2>
+<%= form_with url: 'update', local: true, method: "post" do |f| %>
+	<%= f.label :name %>
+	<%= f.text_field :name %>
+	<br>
+
+	<%= f.label :population %>
+	<%= f.number_field :population %>
+	<br>
+
+	<%= f.label :landmark %>
+	<%= f.text_field :landmark %>
+	<br>
+  	<%= f.submit "Update" %>
+  	<br>
+<% end %>
